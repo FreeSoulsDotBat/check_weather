@@ -1,0 +1,27 @@
+services:
+  app:
+    container_name: check-weather
+    working_dir: /check_weather/app
+    build: .
+    depends_on:
+      - database
+    ports:
+      - 8000:8000
+    volumes:
+      - ./app:/check_weather/app
+    image: check-weather
+    environment:
+      MONGO_DB_URL: mongodb://mongodb-check-weather:27017/
+      MONGO_DB_NAME: check_weather_db
+      API_KEY: 3c53ba0a54352a9d40f3056e6274d7b8
+  database:
+    container_name: mongodb-check-weather
+    image: mongo:latest
+    restart: unless-stopped
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb-data:/data/db
+volumes:
+  mongodb-data:
+  check-weather-data:

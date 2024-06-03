@@ -1,14 +1,14 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routers import users, posts, auth
+
+from .config import settings
+from app.routers import forecast
 
 
 def create_app() -> FastAPI:
-    app = FastAPI(title="Fastapi Template")
+    app = FastAPI(title="Check Weather API")
 
-    app.include_router(users.router)
-    app.include_router(posts.router)
-    app.include_router(auth.router)
+    app.include_router(forecast.router)
 
     # For local development
     origins = [
@@ -24,8 +24,12 @@ def create_app() -> FastAPI:
     )
 
     # Generic health route to sanity check the API
-    @app.get("/health")
-    async def health() -> str:
-        return "ok"
+    @app.get("/")
+    async def health():
+        return {
+            "api_key": settings.api_key,
+            "weather_base_url": settings.weather_base_url,
+            "geocoding_base_url": settings.geocoding_base_url
+        }
 
     return app
