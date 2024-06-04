@@ -13,7 +13,7 @@ services:
     environment:
       MONGO_DB_URL: mongodb://mongodb-check-weather:27017/
       MONGO_DB_NAME: check_weather_db
-      API_KEY: 3c53ba0a54352a9d40f3056e6274d7b8
+      API_KEY: your-api-key
   database:
     container_name: mongodb-check-weather
     image: mongo:latest
